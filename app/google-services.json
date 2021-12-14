@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "855961379007",
+    "project_id": "christmasapplication",
+    "storage_bucket": "christmasapplication.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:855961379007:android:9b42dce3548a657709660a",
+        "android_client_info": {
+          "package_name": "com.example.marvel.christmasapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "855961379007-coni104cunopcsdal1simj02v0rt0m5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD87IVS_lc4geqLBiizcpzOhPki2ydC4OM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "855961379007-coni104cunopcsdal1simj02v0rt0m5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
