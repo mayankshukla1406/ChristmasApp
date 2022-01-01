@@ -3,39 +3,65 @@ package com.example.marvel.christmasapplication
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Card
+import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.lifecycle.viewmodel.compose.viewModel
-import com.example.marvel.christmasapplication.presentation.ItemList
-import com.example.marvel.christmasapplication.presentation.ItemViewModel
+import androidx.navigation.NavArgument
+import androidx.navigation.NavType
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
+import com.example.marvel.christmasapplication.domain.model.Item
+import com.example.marvel.christmasapplication.presentation.ItemDetailScreen.ItemDetail
+import com.example.marvel.christmasapplication.presentation.ItemListScreen.ItemList
 import com.example.marvel.christmasapplication.ui.theme.ChristmasApplicationTheme
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.*
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @ExperimentalCoilApi
+    @ExperimentalFoundationApi
+    @ExperimentalMaterialApi
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             ChristmasApplicationTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(color = MaterialTheme.colors.background) {
-                   ItemList()
+                    val navController = rememberNavController()
+                    NavHost(
+                        navController = navController,
+                        startDestination = "ItemListScreen"
+                    ) {
+                        composable(
+                            route = "ItemListScreen"
+                        ) {
+                            ItemList(navController)
+                        }
+                        composable(
+                            route = "ItemDetailScreen/{itemName}/{itemDescription}/{itemImage}",
+                            arguments = listOf(
+                                navArgument("itemName"){
+                                    type= NavType.StringType
+                                },
+                                navArgument("itemDescription"){
+                                    type = NavType.StringType
+                                },
+                                navArgument("itemImage"){
+                                    type = NavType.StringType
+                                }
+                            )
+                        ) {
+                            val itemName = it.arguments?.get("itemName").toString()
+                            val itemDescription = it.arguments?.get("itemDescription").toString()
+                            val itemImage = it.arguments?.get("itemImage").toString()
+                            val obj = Item(itemName = itemName, itemDescription = itemDescription, itemImage = itemImage)
+                            ItemDetail(obj)
+                        }
+                    }
                 }
             }
         }
